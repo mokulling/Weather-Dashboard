@@ -1,25 +1,28 @@
 var queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q='
 var apiKey = '&appid=27d5701c8ffececd64c7ed1f0876ec1a'
-var city = ''
+var city = 'chicago'
 var cityInputId = $('#searchbox')
 var cityName= $('#city-name')
 var cityTemp= $('#city-temp')
-var humidity= $('#humidity')
-var windSpeed= $('#windSpeed')
+var humidityDiv= $('#humidity')
+var windSpeedDiv= $('#windSpeed')
 var uv = $('#uv')
 var cityInput = cityInputId.val()
+var newcitystore = $('#newcity')
 
 
-
+//search button listener
 $('input').on('search',(function(event) {
         event.preventDefault();
         var value = $(this).val();
         console.log(value);
         city=value
+        newcitystore.append(value)
+        
         
 }))
 
-
+//ajax call to weather api
 $.ajax({
     url: queryUrl+ city +apiKey,
     method: 'GET',
@@ -33,8 +36,8 @@ $.ajax({
     
         cityName.append(cityNameOut)
         cityTemp.append(cityTempOut)
-        humidity.append(cityHumidityOut)
-        windSpeed.append(cityWindOut)
+        humidityDiv.append(cityHumidityOut)
+        windSpeedDiv.append(cityWindOut)
     })
       
     
