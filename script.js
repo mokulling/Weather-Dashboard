@@ -17,7 +17,7 @@ $('input').on('search',(function(event) {
         var value = $(this).val();
         console.log(value);
         city=value
-        newcitystore.append(value)
+        newcitystore.append('<p>' + value)
 }))
 
 
