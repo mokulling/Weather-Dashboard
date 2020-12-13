@@ -18,9 +18,9 @@ $('input').on('search',(function(event) {
         console.log(value);
         city=value
         newcitystore.append(value)
-        
-        
 }))
+
+
 
 //ajax call to weather api
 $.ajax({
