@@ -9,16 +9,25 @@ var windSpeedDiv= $('#wind-speed')
 var uv = $('#uv')
 var cityInput = cityInputId.val()
 var newcitystore = $('#newcity')
-
+var newCity = ''
 
 //search button listener
-$('input').on('search',(function(event) {
+
+
+
+    $('input').on('search',(function(event) {
         event.preventDefault();
-        var value = $(this).val();
+        value = $(this).val();
         console.log(value);
-        city=value
         newcitystore.append('<p>' + value)
-}))
+        city=value
+    
+       
+    
+    }))  
+
+  
+//console.log(form)
 
 
 
@@ -26,6 +35,7 @@ $('input').on('search',(function(event) {
 $.ajax({
     url: queryUrl+ city +apiKey,
     method: 'GET',
+   
     
     }).then(function(response){
         console.log(response)
@@ -39,5 +49,4 @@ $.ajax({
         humidityDiv.append(cityHumidityOut)
         windSpeedDiv.append(cityWindOut)
     })
-      
-    
+ 
