@@ -1,3 +1,4 @@
+//variable definitions
 var apiKey = '&appid=27d5701c8ffececd64c7ed1f0876ec1a'
 var city = 'chicago'
 var cityInputId = $('#searchbox')
@@ -17,6 +18,7 @@ var dayOneTemp = $('#temp')
 var dayOneHum = $('#hum')
 var month= d.getMonth()+1
 var fCalc = -273.15* (9/5) + 32
+var cityImg = $('#city-img')
 
 
 
@@ -55,12 +57,26 @@ function weatherDisplay(event){
         var cityTempOut= response.list[0].main.temp
         var cityHumidityOut = response.list[0].main.humidity
         var cityWindOut = response.list[0].wind.speed
+        var icon = response.list[0].weather[0].icon;
+        var iconadd= "https://openweathermap.org/img/wn/"+icon + "@2x.png"
+
 
         cityName.html("City: " + cityNameOut)
         cityTemp.html("Current Temperature: " + cityTempOut)
         humidityDiv.html("Humidity: " + cityHumidityOut + "%")
-        windSpeedDiv.html("Wind Speed: " + cityWindOut )
+        windSpeedDiv.html("Wind Speed: " + cityWindOut)
+        cityImg.html('<img src='+iconadd+'>')
+        //sets up local storage
         forecast(city)
+        if (response.cod==200){
+            cityArray=JSON.parse(localStorage.getItem("cityList"))
+            if (cityArray=[]){
+                cityArray=[]
+                cityArray.push(city)
+                localStorage.setItem('cityname', JSON.stringify(cityArray));
+                
+            }
+        }
 
 
 
@@ -88,11 +104,12 @@ function forecast(city) {
         for (i=0; i<6; i++){
             var tempKel = response.list[i].main.temp;
             var tempC =(tempKel-273.5);
+            var tempF =(parseFloat(tempC)* + 32)
             var humidityFore = response.list[i].main.humidity;
             var fDays= parseInt(day + i)
 
-            $('#date'+i).html('' + fDays + '.' + month);
-            $('#temp'+i).html(tempC.toFixed(2));
+            $('#date'+i).html('' + month + '/' + fDays);
+            $('#temp'+i).html(tempF.toFixed(2));
             $('#hum'+i).html(humidityFore)
 
 
@@ -107,3 +124,15 @@ function forecast(city) {
         }
     //})}
     )}
+
+/*function uvIndex() {
+    var uvUrl: "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey
+    $.ajax ({
+    url: uvUrl,
+    method: "GET",
+    }).then(function(response){
+
+
+
+    })
+}*/
