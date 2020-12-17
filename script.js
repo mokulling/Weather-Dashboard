@@ -19,6 +19,7 @@ var dayOneHum = $('#hum')
 var month= d.getMonth()+1
 var fCalc = -273.15* (9/5) + 32
 var cityImg = $('#city-img')
+var clickArray = []
 
 
 
@@ -30,10 +31,11 @@ var cityImg = $('#city-img')
     $('input').on('search',(function(event) {
         event.preventDefault();
         value = $(this).val();
-        console.log(value);
+        //console.log(value);
         newcitystore.prepend('<p>' + value)
         city=value
         currentWeather(city)
+        
     
     }))  
 
@@ -159,3 +161,14 @@ function forecast(city) {
     }
 
     reload()
+
+   function pastSearch (event) {
+       var target=event.target;
+       if(event.target.matches('p')){
+           city=target.textContent.trim();
+           currentWeather(city)
+       }
+   }
+    
+
+$(document).on('click', pastSearch)
