@@ -38,7 +38,7 @@ function weatherDisplay(event){
         event.preventDefault();
         value = $(this).val();
         console.log(value);
-        newcitystore.append('<p>' + value)
+        newcitystore.prepend('<p>' + value)
         city=value
         currentWeather(city)
     
@@ -69,16 +69,16 @@ function weatherDisplay(event){
         uvIndex(response.city.coord.lon, response.city.coord.lat)
         //sets up local storage
         forecast(city)
-        if (response.cod==200){
-            cityArray=JSON.parse(localStorage.getItem("cityList"))
-            if (cityArray=[]){
+        if(response.cod==200){
+            cityArray=JSON.parse(localStorage.getItem('cityname'));
+            if (cityArray==null){
                 cityArray=[]
                 cityArray.push(city)
-                localStorage.setItem('cityname', JSON.stringify(cityArray));
-                
-            }
+                localStorage.setItem('cityname', JSON.stringify(cityArray))
+            }if (cityArray.length > 1)
+            cityArray.push(city)
         }
-
+    
 
 
 
@@ -116,6 +116,7 @@ function forecast(city) {
             $('#hum'+i).html(humidityFore)
             $('#img'+i).html('<img src='+iconadd+ '>')
             
+            
 
         }
        
@@ -152,3 +153,23 @@ function forecast(city) {
         })
     }
 
+
+
+    function reload () {
+        newcitystore.empty()
+        var cityArray = JSON.parse(localStorage.getItem('cityname'));
+        if (cityArray !==null) {
+            var cityArray = JSON.parse(localStorage.getItem('cityname'));
+            for (i=0; i<cityArray.length; i++)
+        {
+            newcitystore.prepend('<p>' + cityArray[i])
+        }
+        city=cityArray[i-1];
+        currentWeather(city)
+
+        }
+
+
+    }
+
+    reload()
