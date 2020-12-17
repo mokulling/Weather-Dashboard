@@ -54,11 +54,10 @@ function weatherDisplay(event){
         var cityHumidityOut = response.list[0].main.humidity
         var cityWindOut = response.list[0].wind.speed
 
-        cityName.html(cityNameOut)
-        cityTemp.append(cityTempOut)
-        cityName.append(cityNameOut)
-        humidityDiv.append(cityHumidityOut)
-        windSpeedDiv.append(cityWindOut)
+        cityName.html("City: " + cityNameOut)
+        cityTemp.html("Current Temperature: " + cityTempOut)
+        humidityDiv.html("Humidity: " + cityHumidityOut + "%")
+        windSpeedDiv.html("Wind Speed: " + cityWindOut )
 
 
 
