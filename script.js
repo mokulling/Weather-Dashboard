@@ -11,9 +11,12 @@ var newcitystore = $('#newcity')
 var newCity = ""
 var cityArray=[]
 var d = new Date()
-var dayOneDate = $('#date-1')
-var dayOneTemp = $('#temp-1')
-var dayOneHum = $('#hum-1')
+var day = d.getDate()
+var dayOneDate = $('#date')
+var dayOneTemp = $('#temp')
+var dayOneHum = $('#hum')
+var month= d.getMonth()+1
+var fCalc = -273.15* (9/5) + 32
 
 
 
@@ -21,7 +24,7 @@ function weatherDisplay(event){
     event.preventDefault();
     if(cityInput.val()!==""){
         city=cityInput.val()
-        presentWeather(city);
+        currentWeather(city);
     }
 
 }
@@ -36,12 +39,11 @@ function weatherDisplay(event){
         newcitystore.append('<p>' + value)
         city=value
         currentWeather(city)
-       
     
     }))  
 
 
-
+//Ajax call for current weather in inputted city
   function currentWeather (city) {
     var queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + apiKey
     $.ajax({
@@ -58,7 +60,7 @@ function weatherDisplay(event){
         cityTemp.html("Current Temperature: " + cityTempOut)
         humidityDiv.html("Humidity: " + cityHumidityOut + "%")
         windSpeedDiv.html("Wind Speed: " + cityWindOut )
-
+        forecast(city)
 
 
 
@@ -71,17 +73,33 @@ function weatherDisplay(event){
 
 
 
-//ajax call to weather api
+//ajax call to weather api for forecast
 
 function forecast(city) {
-    
-$.ajax({
-    url: queryUrl+ city +apiKey,
+    var queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + apiKey
+
+    $.ajax({
+    url: queryUrl,
     method: 'GET',
    
     
     }).then(function(response){
         console.log(response)
+        for (i=0; i<6; i++){
+            var tempKel = response.list[i].main.temp;
+            var tempC =(tempKel-273.5);
+            var humidityFore = response.list[i].main.humidity;
+            var fDays= parseInt(day + i)
+
+            $('#date'+i).html('' + fDays + '.' + month);
+            $('#temp'+i).html(tempC.toFixed(2));
+            $('#hum'+i).html(humidityFore)
+
+
+
+
+
+        }
         //for (i=0; i<6; i++) {
        // var cityTempTwoOut = response.list[i].main.temp
         //var cityHumTwoOut = response.list[i].main.humidity
