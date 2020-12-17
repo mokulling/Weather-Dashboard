@@ -102,6 +102,8 @@ function forecast(city) {
     }).then(function(response){
         console.log(response)
         for (i=0; i<6; i++){
+            var icon = response.list[i].weather[0].icon;
+            var iconadd= "https://openweathermap.org/img/wn/"+icon + "@2x.png"
             var tempKel = response.list[i].main.temp;
             var tempC =(tempKel-273.5);
             var tempF =(parseFloat(tempC)* + 32)
@@ -111,28 +113,16 @@ function forecast(city) {
             $('#date'+i).html('' + month + '/' + fDays);
             $('#temp'+i).html(tempF.toFixed(2));
             $('#hum'+i).html(humidityFore)
+            $('#img'+i).html('<img src='+iconadd+ '>')
+            
 
 
 
 
 
         }
-        //for (i=0; i<6; i++) {
-       // var cityTempTwoOut = response.list[i].main.temp
-        //var cityHumTwoOut = response.list[i].main.humidity
-    
+       
         }
     //})}
     )}
 
-/*function uvIndex() {
-    var uvUrl: "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey
-    $.ajax ({
-    url: uvUrl,
-    method: "GET",
-    }).then(function(response){
-
-
-
-    })
-}*/
