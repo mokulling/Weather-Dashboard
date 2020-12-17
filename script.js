@@ -94,13 +94,12 @@ function forecast(city) {
             var iconadd= "https://openweathermap.org/img/wn/"+icon + "@2x.png"
             var tempKel = response.list[i].main.temp;
             var tempC =(tempKel-273.5);
-            var tempF =(parseFloat(tempC)* + 32)
             var humidityFore = response.list[i].main.humidity;
             var fDays= parseInt(day + i)
 
             $('#date'+i).html('' + month + '/' + fDays);
-            $('#temp'+i).html(tempF.toFixed(2));
-            $('#hum'+i).html(humidityFore)
+            $('#temp'+i).html(tempC.toFixed(2) + '\u00B0 C');
+            $('#hum'+i).html(humidityFore + '%')
             $('#img'+i).html('<img src='+iconadd+ '>')
             
             
@@ -163,6 +162,7 @@ function forecast(city) {
     reload()
 
    function pastSearch (event) {
+       console.log(event.target)
        var target=event.target;
        if(event.target.matches('p')){
            city=target.textContent.trim();
