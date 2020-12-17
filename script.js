@@ -66,6 +66,7 @@ function weatherDisplay(event){
         humidityDiv.html("Humidity: " + cityHumidityOut + "%")
         windSpeedDiv.html("Wind Speed: " + cityWindOut)
         cityImg.html('<img src='+iconadd+'>')
+        uvIndex(response.city.coord.lon, response.city.coord.lat)
         //sets up local storage
         forecast(city)
         if (response.cod==200){
@@ -116,13 +117,38 @@ function forecast(city) {
             $('#img'+i).html('<img src='+iconadd+ '>')
             
 
-
-
-
-
         }
        
         }
     //})}
     )}
+
+    //get uv index function
+    function uvIndex(ln,lat){
+        var uvUrl = 'https://api.openweathermap.org/data/2.5/uvi?' + apiKey + '&lat=' +lat + '&lon='+ ln;
+        $.ajax({
+            url: uvUrl,
+            method: 'GET',
+
+
+
+        }).then (function(response){
+            if (response.value <2){
+                uv.html("" +response.value)
+                uv.css('background-color', 'green')
+
+            }else if (response.value <5){
+                uv.html('' +response.value)
+                uv.css('background-color', 'yellow')
+            }else if (response.value <7) {
+                uv.html(''+response.value)
+                uv.css('background-color', 'orange')
+            } else {
+                uv.html (''+ response.value);
+                uv.css ('background-color', 'red')
+            }
+
+
+        })
+    }
 
