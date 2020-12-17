@@ -22,14 +22,7 @@ var cityImg = $('#city-img')
 
 
 
-function weatherDisplay(event){
-    event.preventDefault();
-    if(cityInput.val()!==""){
-        city=cityInput.val()
-        currentWeather(city);
-    }
 
-}
 
 
 //search button listener
@@ -71,17 +64,9 @@ function weatherDisplay(event){
         forecast(city)
         if(response.cod==200){
             cityArray=JSON.parse(localStorage.getItem('cityname'));
-            if (cityArray==null){
-                cityArray=[]
                 cityArray.push(city)
                 localStorage.setItem('cityname', JSON.stringify(cityArray))
-            }if (cityArray.length > 1)
-            cityArray.push(city)
-        }
-    
-
-
-
+            }
 
     })
 
@@ -154,17 +139,18 @@ function forecast(city) {
     }
 
 
-
+//gets previously searched item and displays it as current city
     function reload () {
         newcitystore.empty()
         var cityArray = JSON.parse(localStorage.getItem('cityname'));
         if (cityArray !==null) {
             var cityArray = JSON.parse(localStorage.getItem('cityname'));
-            for (i=0; i<cityArray.length; i++)
+           for (i=0; i<cityArray.length; i++)
         {
-            newcitystore.prepend('<p>' + cityArray[i])
+            city=cityArray[i];
+            //newcitystore.prepend('<p>' + cityArray[i])
         }
-        city=cityArray[i-1];
+        
         currentWeather(city)
 
         }
