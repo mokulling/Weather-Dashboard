@@ -65,7 +65,7 @@ var clickArray = []
         //sets up local storage
         forecast(city)
         if(response.cod==200){
-            cityArray=JSON.parse(localStorage.getItem('cityname'));
+            cityArray= JSON.parse(localStorage.getItem('cityname'));
                 cityArray.push(city)
                 localStorage.setItem('cityname', JSON.stringify(cityArray))
             }
@@ -143,9 +143,9 @@ function forecast(city) {
 //gets previously searched item and displays it as current city
     function reload () {
         newcitystore.empty()
-        var cityArray = JSON.parse(localStorage.getItem('cityname'));
+        cityArray = JSON.parse(localStorage.getItem('cityname'));
         if (cityArray !==null) {
-            var cityArray = JSON.parse(localStorage.getItem('cityname'));
+            cityArray = JSON.parse(localStorage.getItem('cityname'));
            for (i=0; i<cityArray.length; i++)
         {
             city=cityArray[i];
