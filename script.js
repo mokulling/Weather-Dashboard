@@ -65,9 +65,16 @@ var clickArray = []
         //sets up local storage
         forecast(city)
         if(response.cod==200){
-            cityArray= JSON.parse(sessionStorage.getItem('cityname'));
-                cityArray.push(city)
-                sessionStorage.setItem('cityname', JSON.stringify(cityArray))
+            cityArray= JSON.parse(localStorage.setItem('cityname'));
+            cityArray= JSON.parse(localStorage.getItem('cityname'));
+
+            if (cityArray==null){
+                cityArray=[]
+                cityArray.push(city.toUpperCase())
+            }else 
+            localStorage.setItem('cityname', JSON.stringify(cityArray))
+
+                cityArray.push(city.toUpperCase())
             }
 
     })
@@ -143,9 +150,9 @@ function forecast(city) {
 //gets previously searched item and displays it as current city
     function reload () {
         newcitystore.empty()
-        cityArray = JSON.parse(sessionStorage.getItem('cityname'));
+        cityArray = JSON.parse(localStorage.getItem('cityname'));
         if (cityArray !==null) {
-            cityArray = JSON.parse(sessionStorage.getItem('cityname'));
+            cityArray = JSON.parse(localStorage.getItem('cityname'));
            for (i=0; i<cityArray.length; i++)
         {
             city=cityArray[i];
