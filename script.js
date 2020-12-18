@@ -158,6 +158,7 @@ function forecast(city) {
         city=cityArray[i-1];
         
         currentWeather(city)
+        forecast(city)
 
         }
 
