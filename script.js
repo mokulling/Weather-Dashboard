@@ -36,6 +36,7 @@ var cityImg = $('#city-img')
         cityArray.push(city)
         localStorage.setItem("cityname", JSON.stringify(cityArray))
         currentWeather(city)
+        forecast(city)
     }))  
 
 
@@ -163,7 +164,7 @@ function forecast(city) {
 
     }
 
-reload()
+
 
    function pastSearch (event) {
        console.log(event.target)
@@ -171,8 +172,10 @@ reload()
        if(event.target.matches('p')){
            city=target.textContent.trim();
            currentWeather(city)
+           forecast(city)
        }
    }
     
 console.log(cityArray)
 $(document).on('click', pastSearch)
+reload()
