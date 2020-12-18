@@ -2,15 +2,15 @@
 var apiKey = '&appid=27d5701c8ffececd64c7ed1f0876ec1a'
 var city = 'chicago'
 var cityInputId = $('#searchbox')
-var cityName= $('#city-name')
-var cityTemp= $('#city-temp')
-var humidityDiv= $('#humidity')
-var windSpeedDiv= $('#wind-speed')
-var uv = $('#uv')
+var cityName= $('#city-name');
+var cityTemp= $('#city-temp');
+var humidityDiv= $('#humidity');
+var windSpeedDiv= $('#wind-speed');
+var uv = $('#uv');
 var cityInput = cityInputId.val()
-var newcitystore = $('#newcity')
-var newCity = ""
-var cityArray=[]
+var newcitystore = $('#newcity');
+var newCity = "";
+var cityArray= [];
 var d = new Date()
 var day = d.getDate()
 var dayOneDate = $('#date')
@@ -19,7 +19,6 @@ var dayOneHum = $('#hum')
 var month= d.getMonth()+1
 var fCalc = -273.15* (9/5) + 32
 var cityImg = $('#city-img')
-var clickArray = []
 
 
 
@@ -34,9 +33,9 @@ var clickArray = []
         //console.log(value);
         newcitystore.prepend('<p>' + value)
         city=value
+        cityArray.push(city)
+        localStorage.setItem("cityname", JSON.stringify(cityArray))
         currentWeather(city)
-        
-    
     }))  
 
 
@@ -62,21 +61,19 @@ var clickArray = []
         windSpeedDiv.html("Wind Speed: " + cityWindOut)
         cityImg.html('<img src='+iconadd+'>')
         uvIndex(response.city.coord.lon, response.city.coord.lat)
+        
+        
         //sets up local storage
-        forecast(city)
+       /* forecast(city)
         if(response.cod==200){
-            cityArray= JSON.parse(localStorage.setItem('cityname'));
-            cityArray= JSON.parse(localStorage.getItem('cityname'));
-
-            if (cityArray==null){
+            cityArray=JSON.parse(localStorage.getItem("cityname"));
+            if(cityArray==null){
                 cityArray=[]
-                cityArray.push(city.toUpperCase())
-            }else 
-            localStorage.setItem('cityname', JSON.stringify(cityArray))
-
-                cityArray.push(city.toUpperCase())
+                cityArray.push(city.toUpperCase()
+                );
+                localStorage.setItem("cityname", JSON.stringify(cityArray));
             }
-
+            }*/
     })
 
   }
@@ -150,14 +147,14 @@ function forecast(city) {
 //gets previously searched item and displays it as current city
     function reload () {
         newcitystore.empty()
-        cityArray = JSON.parse(localStorage.getItem('cityname'));
+        var cityArray = localStorage.getItem("cityname");
         if (cityArray !==null) {
-            cityArray = JSON.parse(localStorage.getItem('cityname'));
-           for (i=0; i<cityArray.length; i++)
-        {
-            city=cityArray[i];
+        cityArray = JSON.parse(localStorage.getItem("cityname"));
+           for (i=0; i<cityArray.length; i++){
+            
             //newcitystore.prepend('<p>' + cityArray[i])
         }
+        city=cityArray[i-1];
         
         currentWeather(city)
 
@@ -166,7 +163,7 @@ function forecast(city) {
 
     }
 
-    reload()
+reload()
 
    function pastSearch (event) {
        console.log(event.target)
@@ -177,5 +174,5 @@ function forecast(city) {
        }
    }
     
-
+console.log(cityArray)
 $(document).on('click', pastSearch)
