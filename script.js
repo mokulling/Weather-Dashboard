@@ -57,7 +57,7 @@ var cityImg = $('#city-img')
 
 
         cityName.html("City: " + cityNameOut)
-        cityTemp.html("Current Temperature: " + cityTempOut)
+        cityTemp.html("Current Temperature: " + (cityTempOut-273.15).toFixed(2)+ '\u00B0 C')
         humidityDiv.html("Humidity: " + cityHumidityOut + "%")
         windSpeedDiv.html("Wind Speed: " + cityWindOut)
         cityImg.html('<img src='+iconadd+'>')
